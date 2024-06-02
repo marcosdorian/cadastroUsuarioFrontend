@@ -28,7 +28,13 @@ export default function App() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    if(!nameRef.current?.value || !emailRef.current?.value) return;
+    if(!nameRef.current?.value || !emailRef.current?.value) return
+
+    const emailExists = customers.filter(customer => customer.email === emailRef.current?.value);
+    if (emailExists.length > 0) {
+        alert('This email is already being used.');
+        return;
+    }
 
     const response = await api.post("/customer", {
       name: nameRef.current?.value,
